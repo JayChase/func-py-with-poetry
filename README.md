@@ -8,7 +8,7 @@
 
 Check the recommended extensions in this repo as well...
 
-![extensions.json](./.vscode/extensions.json)
+[extensions.json](./.vscode/extensions.json)
 
 ## Project setup
 
@@ -59,7 +59,7 @@ poetry run func new --template "Http Trigger" --name MyHttpTrigger -a ANONYMOUS
 poetry run func start
 ```
 
-- and tasks.json
+- add [tasks.json](./.vscode/tasks.json)
 
 ```json
 {
@@ -95,7 +95,7 @@ poetry run func start
 }
 ```
 
-- add the launch.json
+- add the [launch.json](./.vscode/launch.json)
 
 ```json
 {
