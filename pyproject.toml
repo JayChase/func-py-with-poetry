@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "func-py-with-poetry"
+version = "0.1.0"
+description = ""
+authors = ["JayChase <jonathanchase@outlook.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+azure-functions = "^1.20.0"
+
+
+[tool.poetry.group.dev.dependencies]
+debugpy = "^1.8.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

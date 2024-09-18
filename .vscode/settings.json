@@ -1,0 +1,23 @@
+{
+    "workbench.colorCustomizations": {
+        "titleBar.activeBackground": "#243B81",
+        "titleBar.activeForeground": "#FBFBFE"
+    },
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports.ruff": "explicit"
+        }
+    },
+    "azureFunctions.deploySubpath": ".",
+    "azureFunctions.scmDoBuildDuringDeployment": true,
+    "azureFunctions.projectLanguage": "Python",
+    "azureFunctions.projectRuntime": "~4",
+    "debug.internalConsoleOptions": "neverOpen",
+    "azureFunctions.projectLanguageModel": 2,
+    "workbench.editorAssociations": {
+        "*.md": "vscode.markdown.preview.editor",
+    },
+    "git.openRepositoryInParentFolders": "always"
+}

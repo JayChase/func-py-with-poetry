@@ -1,0 +1,109 @@
+on:
+  push:
+    paths:
+      - '**'
+      - '!**/*.md'
+      - '!**/*.http'
+      - '!.vscode/**'
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  APP_NAME: py-with-poetry
+  DEPLOY_PATH: './infra'
+  PYTHON_VERSION: '3.11'
+
+name: Build and deploy
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: ${{ github.head_ref || github.ref_name }}
+    steps:
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@v3
+
+      - name: Setup Python ${{ env.PYTHON_VERSION }} Environment
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: 'Resolve Project Dependencies Using Pip'
+        shell: bash
+        run: |
+          pushd '.'
+          python -m pip install --upgrade pip
+          pip install poetry
+          poetry export --without-hashes --format=requirements.txt > requirements.txt
+          pip install -r requirements.txt --target=".python_packages/lib/site-packages"
+          popd
+
+      - name: Zip artifact for deployment
+        working-directory: ${{env.AZURE_FUNCTIONAPP_PACKAGE_PATH}}
+        run: zip -r release.zip . -x infra/**\*
+
+      - name: Archive Production Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: release.zip
+
+  provision:
+    runs-on: ubuntu-latest
+    environment: ${{ github.head_ref || github.ref_name }}
+    env:
+    steps:
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@v3
+
+      - name: 'login to AZ'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: create resources
+        uses: azure/arm-deploy@v1
+        with:
+          subscriptionId: ${{ vars.AZURE_SUBSCRIPTION }}
+          resourceGroupName: ${{ vars.AZURE_RG }}
+          template: ${{ env.DEPLOY_PATH }}/func-py-with-poetry.bicep
+          parameters: ''
+          failOnStdErr: false
+          scope: resourcegroup
+
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ github.head_ref || github.ref_name }}
+    env:
+      RESOURCE_GROUP: ${{vars.AZURE_RG}}
+    needs: [provision, build]
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+
+      - name: 'login to AZ'
+        uses: azure/login@v1
+        with:
+          creds: ${{secrets.AZURE_CREDENTIALS}}
+
+      - name: Retrieve publish profile for deployment (only added to stop this issue https://github.com/Azure/functions-action/issues/116)
+        id: publishProfileRetrieval
+        run: |
+          publishProfiles=$(az webapp deployment list-publishing-profiles \
+            --name "func-${{env.APP_NAME}}" \
+            --resource-group "${{ vars.AZURE_RG}}" \
+            --subscription "${{ vars.AZURE_SUBSCRIPTION }}" --xml)
+          echo "::add-mask::$publishProfiles"
+          echo "::set-output name=publishProfiles::$publishProfiles"
+
+      - name: 'Deploy code to Azure Function'
+        uses: Azure/functions-action@v1
+        id: fa
+        with:
+          app-name: func-${{env.APP_NAME}}
+          package: './release.zip'
+          publish-profile: ${{ steps.publishProfileRetrieval.outputs.publishProfiles }}
+          scm-do-build-during-deployment: true
+          enable-oryx-build: true
