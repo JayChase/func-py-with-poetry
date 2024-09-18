@@ -3,6 +3,7 @@
         "ms-azuretools.vscode-azurefunctions",
         "ms-azuretools.vscode-bicep",
         "ms-python.python",
+        "Azurite.azurite",
         "ms-python.debugpy",
         "shd101wyy.markdown-preview-enhanced",
         "ms-python.black-formatter",

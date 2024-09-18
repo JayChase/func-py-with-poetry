@@ -2,54 +2,120 @@
 
 ## Pre-requisites
 
-VSCode
+- [VSCode](https://code.visualstudio.com/)
+- [Azurite](https://marketplace.visualstudio.com/items?itemName=Azurite.azurite) 
+- [Python](https://www.python.org/downloads/)
 
-Azurite 
-Python
+Check the recommended extensions in this repo as well...
 
-
+![extensions.json](./.vscode/extensions.json)
 
 ## Project setup
 
-```bash
+- initialize the project
 
- # initialize the project
+```bash
 
  poetry new func-py-with-poetry/
 
  code func-py-with-poetry
 
  git init
+```
 
- # clean out the scaffolding 
+- clean out the poetry scaffolding folders
 
- poetry run func init --python
+- create a function app
 
-# move the azure-functions requirement into poetry 
+```bash
+poetry run func init --python
+```
 
+- move the azure-functions requirement into poetry
+
+```bash
 poetry add azure-functions
 
 rm requirements.txt
-
-# add debugpy as a dev dependency
-
-poetry add debugpy --group dev
-
-# make sure the selected vscode interpreter is Poetry
- 
-# add a function
-poetry run func new --template "Http Trigger" --name MyHttpTrigger -a ANONYMOUS
-
- # check the function app run locally
-poetry run func start
-
-# add the launch.json and tasks.jon 
-
-# test out debugging the function in VSCode using F5
-
-
-
 ```
+
+- add debugpy as a dev dependency
+
+```bash
+poetry add debugpy --group dev
+```
+
+- make sure the selected vscode interpreter is Poetry
+
+- add a function
+
+```bash
+poetry run func new --template "Http Trigger" --name MyHttpTrigger -a ANONYMOUS
+```
+
+- check the function app run locally
+
+```bash
+poetry run func start
+```
+
+- and tasks.json
+
+```json
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "func: host start",
+            "command": "poetry run func host start",
+            "options": {
+                "env": {
+                    "languageWorkers__python__arguments": "-m debugpy --listen 127.0.0.1:9091"
+                }
+            },
+            "problemMatcher": "$func-python-watch",
+            "isBackground": true
+        },
+        {
+            "label": "poetry install (functions)",
+            "type": "shell",
+            "osx": {
+                "command": "poetry install"
+            },
+            "windows": {
+                "command": "poetry install"
+            },
+            "linux": {
+                "command": "poetry install"
+            },
+            "problemMatcher": []
+        }
+    ]
+}
+```
+
+- add the launch.json
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Attach to Python Functions",
+            "type": "debugpy",
+            "request": "attach",
+            "connect": {
+                "host": "localhost",
+                "port": 9091
+            },
+            "preLaunchTask": "func: host start"
+        }
+    ]
+}
+```
+
+- test out debugging the function in VSCode using **F5**
 
 ## References
 
