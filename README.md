@@ -35,7 +35,7 @@ code .
 
 ### in a codespace
 
-- Create a new codespace and once everything has finished installing you should be ready to go
+- Fork this repo and create a new codespace. Once everything has finished installing you should be ready to go
 
 ## essentials
 
