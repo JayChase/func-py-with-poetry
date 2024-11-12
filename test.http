@@ -1,0 +1,7 @@
+@uri = http://localhost:7071/api
+
+
+###
+# call HTTP trigger
+
+GET {{uri}}/MyHttpTrigger

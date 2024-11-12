@@ -1,0 +1,56 @@
+{
+	"name": "func-py-with-poetry codespace",
+	"dockerFile": "Dockerfile",
+	"hostRequirements": {
+		"cpus": 2
+	},
+	"forwardPorts": [
+		7071
+	],
+	// Configure tool-specific properties.
+	"customizations": {
+		"codespaces": {
+			"openFiles": [
+				"README.md"
+			]
+		},
+		"vscode": {
+			"settings": {},
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"streetsidesoftware.code-spell-checker",
+				"ms-vscode.azure-account",
+				"GitHub.vscode-github-actions",
+				"azurite.azurite",
+				"ms-azuretools.vscode-azureresourcegroups",
+				"ms-azuretools.vscode-azurefunctions",
+				"humao.rest-client",
+				"eamodio.gitlens",
+				"ms-python.python",
+				"ms-python.debugpy",
+				"ms-python.black-formatter",
+				"ms-python.vscode-pylance",
+				"ms-python.pylint"
+			]
+		}
+	},
+	"initializeCommand": "",
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "pip install poetry==1.8.4",
+	"postStartCommand": "poetry install --no-root & azurite",
+	"postAttachCommand": "",
+	"remoteUser": "root",
+	"runArgs": [
+		"--privileged"
+	],
+	"features": {
+		"ghcr.io/devcontainers/features/azure-cli:1": {
+			"installUsingPython": true,
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers/features/github-cli:1": {
+			"installDirectlyFromGitHubRelease": true,
+			"version": "latest"
+		}
+	}
+}
