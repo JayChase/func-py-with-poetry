@@ -1,6 +1,12 @@
 # Creating a Python Function App with Poetry
 
-## pre-requisites
+A sample project that shows how to use Poetry in an Azure Function App. It includes local debugging in vscode and deployment with a Github Workflow.
+
+## working with this sample
+
+### locally
+
+#### prerequisites
 
 - [VSCode](https://code.visualstudio.com/)
 - [Azurite](https://marketplace.visualstudio.com/items?itemName=Azurite.azurite) 
@@ -11,9 +17,6 @@ Check the recommended extensions in this repo as well...
 
 [extensions.json](./.vscode/extensions.json)
 
-## working with this sample
-
-### locally
 
 - Install the recommended extensions
 
@@ -45,7 +48,7 @@ code .
 
 - For a walkthrough of how the steps taken to create the project see this [blog post](https://www.usefuldev.com/post/Create%20a%20function%20app%20with%20poetry)
 
-## References
+## references
 
 - [Develop Azure Functions locally using Core Tools](https://learn.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=windows%2Cisolated-process%2Cnode-v4%2Cpython-v2%2Chttp-trigger%2Ccontainer-apps&pivots=programming-language-python)
 
