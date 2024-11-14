@@ -44,7 +44,7 @@ code .
 
 - See the [launch.json](./.vscode/launch.json) and [tasks.json](./.vscode/tasks.json) how to run / debug a function app using poetry  
 
-- [deploy.yml](./.github/workflows/deploy.yml) for how to build amd deploy the function app
+- Check [deploy.yml](./.github/workflows/deploy.yml) for how to build amd deploy the function app
 
 - For a walkthrough of how the steps taken to create the project see this [blog post](https://www.usefuldev.com/post/Create%20a%20function%20app%20with%20poetry)
 
