@@ -1,6 +1,7 @@
 # Creating a Python Function App with Poetry
 
-A sample project that shows how to use Poetry in an Azure Function App. It includes local debugging in vscode and deployment with a Github Workflow.
+A sample project that shows how to use Poetry in an Azure Function App. It includes local debugging in vscode and deployment with a Github Workflow. 
+See this [blog post](https://www.usefuldev.com/post/Creating%20a%20Python%20Function%20App%20with%20Poetry) for a walkthrough of how to create the project. Or use the instructions below to work with this repo.
 
 ## working with this sample
 
